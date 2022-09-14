@@ -36,22 +36,22 @@ while (rotationNum > 0):
     if (directions[dirNum] == 3):
         heading_pos = [current_pos[0] - 1, current_pos[1]]
 
-    print('now in :', current_pos, 'going to :', heading_pos)
-    print('heading position : ', mapCode[heading_pos[1]][heading_pos[0]])
+    #print('now in :', current_pos, 'going to :', heading_pos)
+    #print('heading position : ', mapCode[heading_pos[1]][heading_pos[0]])
 
     # 바다인지 확인
     if mapCode[heading_pos[1]][heading_pos[0]]:
         oceanFlag = True
-        print('oceanFlag =', oceanFlag)
+        #print('oceanFlag =', oceanFlag)
 
 # 갔던 곳인지 확인
     if heading_pos in previous_pos:
         previousFlag = True
-        print('previousFlag =', previousFlag)
+        #print('previousFlag =', previousFlag)
 
 # 둘 다 아니면 전진
     if oceanFlag != True and previousFlag != True:
-        print('oneStepAhead')
+        #print('oneStepAhead')
         stepCount += 1
         current_pos = heading_pos
         previous_pos.append(current_pos)
@@ -62,8 +62,51 @@ while (rotationNum > 0):
         rotationNum -= 1
         oceanFlag = False
         previousFlag = False
-        print('previousVisit =', previous_pos)
+        #print('previousVisit =', previous_pos)
 
-    print('rotationNum =', rotationNum)
+    #print('rotationNum =', rotationNum)
 
 print(stepCount)
+
+
+
+### 풀이
+
+n,m = map(int, input().split())
+x, y, direction = map(int, input().split())
+map_code = [list(map(int, input().split())) for _ in range(n)]
+
+visited_map = [[0] * m for _ in range(n)]
+visited_map[x][y]=1
+#print(visited_map)
+
+#북 동 남 서
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
+
+def turn_left():
+  global direction
+  direction -=1
+  if direction <0 : direction = 3  
+
+count = 1
+turn_time=4
+
+while (turn_time > 0):
+  turn_left()
+  nx = x + dx[direction]
+  ny = y + dy[direction]
+
+  # print(nx, ny)
+
+  if mapCode[nx][ny]==0 and visited_map[nx][ny]==0:
+    count+=1
+    x=nx
+    y=ny
+    visited_map[x][y]=1
+    turn_time=4
+    # print(x, y)
+  else :
+    turn_time-=1
+
+print(count)
