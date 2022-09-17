@@ -1,4 +1,4 @@
-x_axis, y_axis = map(int, input().split())
+ x_axis, y_axis = map(int, input().split())
 x_pos, y_pos, direction = map(int, input().split())
 mapCode = [list(map(int, input().split())) for _ in range(y_axis)]
 
