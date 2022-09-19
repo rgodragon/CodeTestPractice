@@ -1,71 +1,39 @@
 from collections import deque
 
-map_code = [list(map(int, input().split())) for _ in range(n)]
-visited_map = [[0] * m for _ in range(n)]
-
-
-
-def dfs(graph, v, visited):
-  #현재 노드 방문처리
-  visited_map[x][y] = True
-  # 현재 노드와 연결된 다른 노드 재귀적으로 방문
-  if graph[x][y] ==0:
-    
-#현재 노드 위치 = x,y
-
-
-
-
-상 x, y-1
-하 x, y+1
-좌 x-1, y
-우 x+1, y
-
-visited_map[x][y]=1
+#n,m입력
+n, m = map(int, input().split())
+graph = []
 
 #그래프 입력
+for _ in range(n):
+    graph.append(list(map(int, input())))
 
-# now_position
-# next_postion
-# visited
-# graph =[]
+# print(n, m)
+# print(graph)
 
-# if next_position
+result = 0
 
-# def dfs(graph, v, visited):
-#     #현재 노드를 방눔 처리
-#     visited[v] = True
-#     print(v, end=' ')
-#     # 현재 노드와 연결된 다른 노드를 재귀적으로 방문
-#     for i in graph[v]:
-#         if not visited[i]:
-#             dfs(graph, i, visited)
 
-# from collections import deque
+def dfs(x, y):
 
-# # BFS 메서드 정의
-# def bfs(graph, start, visited):
-#     #큐 rngusdmf dnlgo deque 라이브러리 사용
-#     queue = deque([start])
-#     #현재 노드 방문처리
-#     visited[start] = True
-#     #큐가 빌 때까지 반복
-#     while queue:
-#         #큐에서 하나의 원소를 뽑아 출력
-#         v = queue.popleft()
-#         print(v, end=' ')
-#         #해당 원소와 연결된 아직 방문하지 않은 원소들을 큐에 삽입
-#         for i in graph[v]:
-#             if not visited[i]:
-#                 queue.append(i)
-#                 visited[i] = True
+    #범위 벗어나면 False
+    if x < 0 or x >= n or y < 0 or y >= m:
+        return False
+    #지금 좌표 안 갔던 곳인지 확인
+    if graph[x][y] == 0:
+        # 간 곳으로 만들기
+        graph[x][y] = 1
+        #상,하,좌,우 이동하며 연결 체크 - 아래 다 아닌 경우에 True 하나 내보내기
+        dfs(x - 1, y)
+        dfs(x + 1, y)
+        dfs(x, y - 1)
+        dfs(x, y + 1)
+        return True
+    return False
 
-# # 각 노드가 연결된 정보를 리스트 자료형으로 표현(2차원 리스트)
-# graph = [[], [2, 3, 8], [1, 7], [1, 4, 5], [3, 5], [3, 4], [7], [2, 6, 8],
-#          [1, 7]]
 
-# # 각 노드가 방문된 정보를 리스트 자료형으로 표현(1차원 리스트)
-# visited = [False] * 9
+for i in range(n):
+    for j in range(m):
+        if dfs(i, j): result += 1
 
-# #정의도니 BFS 함수 호출
-# bfs(graph, 1, visited)
+print(result)
