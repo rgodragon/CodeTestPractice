@@ -84,6 +84,132 @@
 #     #print(i, d[i], d)
 # print(d[x])
 
-#https://velog.io/@alexms0316/%EC%9D%B4%EA%B2%83%EC%9D%B4-%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EB%8B%A4-with-%ED%8C%8C%EC%9D%B4%EC%8D%AC-Chp-8.-%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0
+#https://www.youtube.com/watch?v=G3y1E564udo
 
-print(5 % 5)
+# print(15 // 5)
+
+# x = int(input())
+# num = 0
+
+# def cal(n):
+#     global num
+#     if n % 5 == 0:
+#         n = n // 5
+#     elif x % 5 <= 2:
+#         n = n - 1
+#     else:
+#         if x % 3 == 0:
+#             n = n // 3
+
+#         elif x % 2 == 0:
+#             n = n // 2
+#     num += 1
+#     print(n)
+#     if n == 1:
+#         print(num)
+#     else:
+#         return cal(n)
+
+# cal(x)
+
+# x = int(input())
+# d = [0] * 30001
+# d[1] = 0
+
+# for i in range(2, x + 1):
+#     d[i] = d[i - 1] + 1
+#     if i % 5 == 0:
+#         d[i] = min(d[i], d[i // 5] + 1)
+#     if i % 3 == 0:
+#         d[i] = min(d[i], d[i // 3] + 1)
+#     if i % 2 == 0:
+#         d[i] = min(d[i], d[i // 2] + 1)
+
+# print(d[x])
+
+###############   실전문제 개미전사 / 시도 ##################
+
+# n = int(input())
+# warehouse = list(map(int, input().split()))
+# food = 0
+# for i in range(0, n):
+#     for k in range(n - 1, i + 1, -1):
+#         food = max(food, warehouse[i] + warehouse[k])
+#         # print('food : ', food)
+#         print('food : ', food)
+
+# print(food)
+
+# ###############   실전문제 개미전사 / 풀이 ##################
+# #어떻게 다이나믹 프로그래밍으로 푸는 지 알 수 있는가? 이전에 한번 구해둔 답과 비교해가면서 알아낼 수 있기 때문에.
+# # 내가 처음에 푼 코드에서는 이전에 구해둔 답을 계속 들고가면서 풀었음. 그걸 다이나믹한 방법으로 하는걸 몰랐을 뿐.
+# n = int(input())
+# warehouse = list(map(int, input().split()))
+# d = [0] * 100
+# d[0] = warehouse[0]  # 점화식에 쓰여있는 -만큼 초기값 주기 해주기
+# d[1] = warehouse[1]
+
+# for i in range(2, n):
+#     # print(i)
+#     d[i] = max(d[i - 1], d[i - 2] + warehouse[i])  # 이전 값과, 현재 쓰여진 값과 이전이전값의 비교
+
+# print(d[n - 1])
+
+
+###############   실전문제 바닥전사/ 시도 ##################
+# n = int(input())
+# d=[0]*1000
+# d[0]=1
+# d[1]=3
+
+# for i in range(2, n):
+#   d[i]=d[i-2]*2+d[i-1]
+
+# print(d[n-1]%796796)  
+
+###############   실전문제 화폐구성/ 시도 ##################
+# n,m = map(int, input().split())
+# money= [int(input()) for _ in range(n)]
+# remain = m
+# num = 0
+# flag = 0
+# # print(money)
+# while remain>0:
+#   num+=1
+#   current_remain = remain
+#   for i in range(n):
+#     if current_remain-money[i]>=0:
+#       remain = min(remain, current_remain-money[i])
+#       flag += 1
+#       if remain == 0:
+#         print(num)
+      
+#     if flag==0:
+#       print(-1)
+#       remain=-1
+#       break
+    
+#   flag = 0
+
+# ###############   실전문제 화폐구성/ 풀이 ##################
+n,m = map(int, input().split())
+money= [int(input()) for _ in range(n)]
+money.sort()
+d=[m+1]*(m+1)
+d[0]=0 # 초기값 중요!!
+       
+for i in range(n):
+  for k in range(1, m+1):
+    # if k%money[i] ==0:
+    #   d[k]=min(d[k], k//money[i]) // 이것도 답이 될 수 있으나 연산속도 더 필요함.
+
+    if k-money[i]>=0 and d[k-money[i]]!=m+1:
+      d[k]=min(d[k], d[k-money[i]]+1)
+
+# print(d)
+if d[m]==m+1:
+  print(-1)
+else :
+  print(d[m])
+      
+    
